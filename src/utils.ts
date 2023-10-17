@@ -123,6 +123,13 @@ export function getCluster(project: ServiceDefinition['projects'][number]) {
   return project.cluster ?? `${project.client}-${project.environment}`;
 }
 
+export function getTargetGroupName(
+  project: ServiceDefinition['projects'][number],
+  port: string,
+) {
+  return `${project.client}-${project.name}-${port}-${project.environment}`;
+}
+
 export function groupProjectsByClusterName(
   projects: ServiceDefinition['projects'],
 ) {

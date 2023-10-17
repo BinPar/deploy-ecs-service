@@ -41,13 +41,18 @@ const projectSchema = z.object({
   loadBalancers: z
     .array(
       z.object({
-        targetGroupArn: z.string(),
-        loadBalancerName: z.string(),
+        targetGroupArn: z.string().optional(),
+        loadBalancerName: z.string().optional(),
         containerName: z.string().optional(),
         containerPort: z.number().optional(),
       }),
     )
     .optional(),
+  autoCreateTargetGroups: z.boolean().default(true),
+  healthCheckPath: z.string().default('/'),
+  healthCheckProtocol: z
+    .enum(['GENEVE', 'HTTP', 'HTTPS', 'TCP', 'TCP_UDP', 'TLS', 'UDP'])
+    .default('HTTP'),
 });
 
 export const serviceDefinitionSchema = z.object({
