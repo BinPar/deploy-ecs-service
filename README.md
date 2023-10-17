@@ -1,4 +1,3 @@
-
 <!-- start title -->
 # GitHub Action: BinPar Deploy ECS Service Action for GitHub Actions
 <!-- end title -->
