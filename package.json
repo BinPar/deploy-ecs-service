@@ -35,7 +35,7 @@
     "package": "ncc build src/index.ts --license licenses.txt",
     "package:watch": "npm run package -- --watch",
     "ghadocs": "github-action-readme-generator --readme README.md",
-    "all": "npm run format:write && npm run lint && npm run type-check && npm run package"
+    "all": "npm run format:write && npm run lint && npm run type-check && npm run package && npm run ghadocs && node fixReadme.mjs && npx standard-version"
   },
   "license": "MIT",
   "jest": {
