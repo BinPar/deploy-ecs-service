@@ -27,7 +27,10 @@ async function createService(
       networkConfiguration:
         project.customNetworkConfiguration ||
         (await getSubnetsForNetworkConfiguration(project)),
-      loadBalancers: [{}],
+      enableECSManagedTags: true,
+      loadBalancers: project.loadBalancers,
+      desiredCount: project.desiredCount,
+      propagateTags: 'SERVICE',
       tags: [
         {
           key: 'name',
@@ -57,11 +60,13 @@ async function updateService(
       cluster: getCluster(project),
       service: getServiceName(project),
       taskDefinition: taskDefinitionArn,
-      forceNewDeployment: forceNewDeploy,
+      capacityProviderStrategy: project.customCapacityProviderStrategy,
       networkConfiguration:
         project.customNetworkConfiguration ||
         (await getSubnetsForNetworkConfiguration(project)),
-      capacityProviderStrategy: project.customCapacityProviderStrategy,
+      loadBalancers: project.loadBalancers,
+      desiredCount: project.desiredCount,
+      forceNewDeployment: forceNewDeploy,
     }),
   );
 }

@@ -19,6 +19,7 @@ const projectSchema = z.object({
   serviceName: z.string().optional(),
   cluster: z.string().optional(),
   alreadyExists: z.boolean().optional(),
+  desiredCount: z.number().default(1),
   customCapacityProviderStrategy: z
     .array(
       z.object({
@@ -37,7 +38,16 @@ const projectSchema = z.object({
       }),
     })
     .optional(),
-  // loadBalancers:
+  loadBalancers: z
+    .array(
+      z.object({
+        targetGroupArn: z.string(),
+        loadBalancerName: z.string(),
+        containerName: z.string().optional(),
+        containerPort: z.number().optional(),
+      }),
+    )
+    .optional(),
 });
 
 export const serviceDefinitionSchema = z.object({
