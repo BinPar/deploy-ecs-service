@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.4](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.3...v1.2.4) (2023-10-18)
+
+
+### Bug Fixes
+
+* error trying to delete target group before remove rule ([244e145](https://github.com/BinPar/deploy-ecs-service/commit/244e1453cae20ad0ea434814cd73aaac0c0147ae))
+
 ## [1.2.3](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.2...v1.2.3) (2023-10-18)
 
 
