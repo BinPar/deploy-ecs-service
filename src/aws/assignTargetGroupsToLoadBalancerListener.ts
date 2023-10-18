@@ -96,23 +96,28 @@ export async function deleteRuleByTargetGroupARN(
   }
 }
 
+export type TargetGroupARNAction = {
+  delete?: string;
+  create: string;
+};
+
 export async function assignTargetGroupsToLoadBalancerListener(
   project: ServiceDefinition['projects'][number],
-  targetGroupARNs: string[],
+  targetGroupActions: TargetGroupARNAction[],
 ) {
   const rules = await getRulesByListenerARN(
     project.autoCreateTargetGroupsOptions?.loadBalancerListenerARN,
   );
-  for (const targetGroupARN of targetGroupARNs) {
+  for (const targetGroupARNAction of targetGroupActions) {
     const rule = rules?.find((rule) => {
       return rule.Actions?.some(
-        (action) => action.TargetGroupArn === targetGroupARN,
+        (action) => action.TargetGroupArn === targetGroupARNAction.delete,
       );
     });
     if (rule) {
-      await updateRule(project, targetGroupARN, rule);
+      await updateRule(project, targetGroupARNAction.create, rule);
     } else {
-      await createRule(project, targetGroupARN);
+      await createRule(project, targetGroupARNAction.create);
     }
   }
 }

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.3](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.2...v1.2.3) (2023-10-18)
+
+
+### Bug Fixes
+
+* target group no associated load balancer ([5739fe3](https://github.com/BinPar/deploy-ecs-service/commit/5739fe3d39a7d4f3365e5fc7b19260b8c953018a))
+
 ## [1.2.2](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.1...v1.2.2) (2023-10-18)
 
 

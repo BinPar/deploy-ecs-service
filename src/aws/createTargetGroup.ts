@@ -4,12 +4,12 @@ import {
   DescribeTargetGroupsCommand,
 } from '@aws-sdk/client-elastic-load-balancing-v2';
 import type { ServiceDefinition } from '../models/serviceDefinition';
-import { getTargetGroupName, nonNullable } from '../utils';
+import { getTargetGroupName } from '../utils';
 import { type LoadBalancer, type TaskDefinition } from '@aws-sdk/client-ecs';
 import { getELBV2Client } from './getELBV2Client';
 import {
+  type TargetGroupARNAction,
   assignTargetGroupsToLoadBalancerListener,
-  deleteRuleByTargetGroupARN,
 } from './assignTargetGroupsToLoadBalancerListener';
 
 async function getTargetGroupByName(targetGroupName: string) {
@@ -52,9 +52,13 @@ export async function createOrUpdateTargetsGroups(
     return;
   }
   const loadBalancers: LoadBalancer[] = [];
+  const targetGroupARNActions: TargetGroupARNAction[] = [];
   for (const container of essentialContainersWithPorts) {
     const portMapping = container.portMappings?.[0];
     const port = portMapping?.containerPort || 80;
+    const targetGroupAction: TargetGroupARNAction = {
+      create: '',
+    };
     const targetGroupName = getTargetGroupName(project, `${port}`);
     const existingTargetGroup = await getTargetGroupByName(targetGroupName);
     if (existingTargetGroup?.TargetGroupArn) {
@@ -63,10 +67,7 @@ export async function createOrUpdateTargetsGroups(
           `Failed to delete existing target group ${targetGroupName}`,
         );
       }
-      await deleteRuleByTargetGroupARN(
-        project,
-        existingTargetGroup.TargetGroupArn,
-      );
+      targetGroupAction.delete = existingTargetGroup.TargetGroupArn;
     }
     const res = await elbv2Client.send(
       new CreateTargetGroupCommand({
@@ -107,11 +108,13 @@ export async function createOrUpdateTargetsGroups(
       loadBalancers.push({
         targetGroupArn: res.TargetGroups[0].TargetGroupArn,
       });
+      targetGroupAction.create = res.TargetGroups[0].TargetGroupArn;
     }
+    targetGroupARNActions.push(targetGroupAction);
   }
   await assignTargetGroupsToLoadBalancerListener(
     project,
-    loadBalancers.map((lb) => lb.targetGroupArn).filter(nonNullable),
+    targetGroupARNActions,
   );
   return loadBalancers;
 }
