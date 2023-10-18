@@ -2,7 +2,7 @@ name: 'Build on release-please PR labeled autorelease: pending'
 
 on:
   pull_request:
-    types: [labeled, synchronize]
+    types: [labeled, synchronize, opened]
 
 permissions:
   contents: write
