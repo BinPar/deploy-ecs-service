@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.2](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.1...v1.2.2) (2023-10-18)
+
+
+### Bug Fixes
+
+* vpc id must be specified on target group creation ([bc5281c](https://github.com/BinPar/deploy-ecs-service/commit/bc5281ca4469ab3010f28c028137a329084a1d62))
+
 ## [1.2.1](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.0...v1.2.1) (2023-10-18)
 
 

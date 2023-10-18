@@ -2,7 +2,7 @@ name: 'Build on release-please PR labeled autorelease: pending'
 
 on:
   pull_request:
-    types: [labeled]
+    types: [labeled, synchronize]
 
 permissions:
   contents: write
@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     if: "${{ contains(github.event.pull_request.labels.*.name, 'autorelease: pending') }}"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v3
         with:
           node-version: 18
