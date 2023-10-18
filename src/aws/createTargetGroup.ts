@@ -62,11 +62,6 @@ export async function createOrUpdateTargetsGroups(
     const targetGroupName = getTargetGroupName(project, `${port}`);
     const existingTargetGroup = await getTargetGroupByName(targetGroupName);
     if (existingTargetGroup?.TargetGroupArn) {
-      if (!(await deleteTargetGroup(existingTargetGroup.TargetGroupArn))) {
-        throw new Error(
-          `Failed to delete existing target group ${targetGroupName}`,
-        );
-      }
       targetGroupAction.delete = existingTargetGroup.TargetGroupArn;
     }
     const res = await elbv2Client.send(
@@ -116,5 +111,10 @@ export async function createOrUpdateTargetsGroups(
     project,
     targetGroupARNActions,
   );
+  for (const targetGroupAction of targetGroupARNActions) {
+    if (targetGroupAction.delete) {
+      await deleteTargetGroup(targetGroupAction.delete);
+    }
+  }
   return loadBalancers;
 }

@@ -11,7 +11,7 @@ import {
 } from '@aws-sdk/client-ecs';
 import type { ServiceDefinition } from '../models/serviceDefinition';
 import { getECSClient } from './getECSClient';
-import { debug, setFailed, setOutput } from '@actions/core';
+import { debug, setOutput } from '@actions/core';
 import { getCluster, getServiceName } from '../utils';
 import { getSubnetsForNetworkConfiguration } from './getSubnetsForNetworkConfiguration';
 import { createOrUpdateTargetsGroups } from './createTargetGroup';
@@ -139,9 +139,6 @@ export async function deployServiceProject(
     }
     return res;
   } catch (error) {
-    setFailed(
-      `Failed to deploy to ECS: ${(error as Error).message}`,
-    );
     debug('Task definition contents:');
     debug(JSON.stringify(taskDefinition, undefined, 4));
     throw error;
