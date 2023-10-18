@@ -53,6 +53,14 @@ const projectSchema = z.object({
   healthCheckProtocol: z
     .enum(['GENEVE', 'HTTP', 'HTTPS', 'TCP', 'TCP_UDP', 'TLS', 'UDP'])
     .default('HTTP'),
+  secrets: z
+    .array(
+      z.object({
+        name: z.string(),
+        valueFrom: z.string(),
+      }),
+    )
+    .optional(),
 });
 
 export const serviceDefinitionSchema = z.object({
