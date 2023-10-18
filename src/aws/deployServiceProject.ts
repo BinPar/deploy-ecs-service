@@ -89,6 +89,16 @@ export async function deployServiceProject(
 ) {
   try {
     const ecsClient = getECSClient();
+    const projectTaskDefinition = { ...taskDefinition };
+    projectTaskDefinition.family = `${project.client}-${project.name}-${project.environment}`;
+    if (project.secrets?.length) {
+      projectTaskDefinition.containerDefinitions?.forEach((container) => {
+        if (!container.secrets) {
+          container.secrets = [];
+        }
+        container.secrets.push(...project.secrets!);
+      });
+    }
     const registerResponse = await ecsClient.send(
       new RegisterTaskDefinitionCommand(taskDefinition),
     );
