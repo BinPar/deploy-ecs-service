@@ -58,6 +58,60 @@ const projectSchema = z.object({
     )
     .optional(),
   autoCreateTargetGroups: z.boolean().default(true),
+  autoCreateTargetGroupsOptions: z
+    .object({
+      loadBalancerListenerARN: z.string(),
+      ruleConditions: z
+        .array(
+          z.object({
+            Field: z.enum([
+              'http-header',
+              'host-header',
+              'path-pattern',
+              'http-request-method',
+              'query-string',
+              'source-ip',
+            ]),
+            Values: z.array(z.string()).optional(),
+            HostHeaderConfig: z
+              .object({
+                Values: z.array(z.string()),
+              })
+              .optional(),
+            PathPatternConfig: z
+              .object({
+                Values: z.array(z.string()),
+              })
+              .optional(),
+            HttpHeaderConfig: z
+              .object({
+                HttpHeaderName: z.string(),
+                Values: z.array(z.string()),
+              })
+              .optional(),
+            QueryStringConfig: z
+              .object({
+                Values: z.array(
+                  z.object({ Key: z.string(), Value: z.string() }),
+                ),
+              })
+              .optional(),
+            HttpRequestMethodConfig: z
+              .object({
+                Values: z.array(z.string()),
+              })
+              .optional(),
+            SourceIpConfig: z
+              .object({
+                Values: z.array(z.string()),
+              })
+              .optional(),
+          }),
+        )
+        .optional(),
+      rulePriority: z.number(),
+    })
+    .optional(),
   healthCheckPath: z.string().default('/'),
   healthCheckProtocol: z
     .enum(['GENEVE', 'HTTP', 'HTTPS', 'TCP', 'TCP_UDP', 'TLS', 'UDP'])
