@@ -27,5 +27,6 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/BinPar/deploy-ecs-service.git"
           git add .
+          git checkout -b ${{ github.head_ref }}
           git commit -m "chore: build and update README"
           git push origin ${{ github.head_ref }}
