@@ -1,26 +1,16 @@
-import { getInput } from '@actions/core';
 import {
   CreateTargetGroupCommand,
   DeleteTargetGroupCommand,
   DescribeTargetGroupsCommand,
-  ElasticLoadBalancingV2Client,
 } from '@aws-sdk/client-elastic-load-balancing-v2';
 import type { ServiceDefinition } from '../models/serviceDefinition';
-import { getTargetGroupName } from '../utils';
+import { getTargetGroupName, nonNullable } from '../utils';
 import { type LoadBalancer, type TaskDefinition } from '@aws-sdk/client-ecs';
-
-let elbv2Client: ElasticLoadBalancingV2Client;
-
-export function getELBV2Client() {
-  if (!elbv2Client) {
-    const region = getInput('region', { required: false }) || 'eu-west-1';
-    elbv2Client = new ElasticLoadBalancingV2Client({
-      region,
-      customUserAgent: 'aws-ecs-deploy-service-github-action',
-    });
-  }
-  return elbv2Client;
-}
+import { getELBV2Client } from './getELBV2Client';
+import {
+  assignTargetGroupsToLoadBalancerListener,
+  deleteRuleByTargetGroupARN,
+} from './assignTargetGroupsToLoadBalancerListener';
 
 async function getTargetGroupByName(targetGroupName: string) {
   const elbv2Client = getELBV2Client();
@@ -73,6 +63,10 @@ export async function createOrUpdateTargetsGroups(
           `Failed to delete existing target group ${targetGroupName}`,
         );
       }
+      await deleteRuleByTargetGroupARN(
+        project,
+        existingTargetGroup.TargetGroupArn,
+      );
     }
     const res = await elbv2Client.send(
       new CreateTargetGroupCommand({
@@ -112,10 +106,12 @@ export async function createOrUpdateTargetsGroups(
     if (res.TargetGroups?.[0]?.TargetGroupArn) {
       loadBalancers.push({
         targetGroupArn: res.TargetGroups[0].TargetGroupArn,
-        containerName: container.name,
-        containerPort: port,
       });
     }
   }
+  await assignTargetGroupsToLoadBalancerListener(
+    project,
+    loadBalancers.map((lb) => lb.targetGroupArn).filter(nonNullable),
+  );
   return loadBalancers;
 }
