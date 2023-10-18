@@ -10,7 +10,7 @@ Registers an Amazon ECS task definition, and deploys it to a service, but with m
 <!-- start usage -->
 ```yaml
 
-- uses: BinPar/deploy-ecs-service@v1.1.1
+- uses: BinPar/deploy-ecs-service@v1.2.2
   with:
   task-definition: ''
 
