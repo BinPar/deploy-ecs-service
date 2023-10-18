@@ -77,6 +77,7 @@ export async function createOrUpdateTargetsGroups(
     const res = await elbv2Client.send(
       new CreateTargetGroupCommand({
         Name: targetGroupName,
+        VpcId: project.targetGroupsVPCId,
         HealthCheckEnabled: true,
         HealthCheckIntervalSeconds: container.healthCheck?.interval ?? 60,
         HealthCheckPath: project.healthCheckPath,
@@ -84,6 +85,7 @@ export async function createOrUpdateTargetsGroups(
         HealthCheckProtocol: project.healthCheckProtocol,
         HealthCheckTimeoutSeconds: container.healthCheck?.timeout ?? 5,
         HealthyThresholdCount: container.healthCheck?.retries ?? 2,
+        UnhealthyThresholdCount: (container.healthCheck?.retries ?? 2) + 1,
         Port: port,
         Protocol: project.healthCheckProtocol,
         TargetType: 'ip',
