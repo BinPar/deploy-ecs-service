@@ -20,6 +20,15 @@ const projectSchema = z.object({
   cluster: z.string().optional(),
   alreadyExists: z.boolean().optional(),
   desiredCount: z.number().default(1),
+  targetGroupsVPCId: z.string(),
+  taskVpcSubnetsFilters: z
+    .array(
+      z.object({
+        Name: z.string(),
+        Values: z.array(z.string()),
+      }),
+    )
+    .optional(),
   customCapacityProviderStrategy: z
     .array(
       z.object({

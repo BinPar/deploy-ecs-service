@@ -20,17 +20,22 @@ function groupSubnetsByVpcId(subnets: Subnet[]) {
   return subnetMap;
 }
 
-async function getAllValidSubnets(client: string) {
+async function getAllValidSubnets(
+  project: ServiceDefinition['projects'][number],
+) {
+  const client = project.client;
   const region = getInput('region', { required: false }) || 'eu-west-1';
   const ec2Client = new EC2Client({
     region,
   });
-  const filters = [
-    {
-      Name: 'tag:Name',
-      Values: ['*public*'],
-    },
-  ];
+  const filters = project.taskVpcSubnetsFilters?.length
+    ? project.taskVpcSubnetsFilters
+    : [
+        {
+          Name: 'tag:Name',
+          Values: ['*public*'],
+        },
+      ];
   const subnetsCommand = new DescribeSubnetsCommand({
     Filters: filters,
   });
@@ -39,7 +44,7 @@ async function getAllValidSubnets(client: string) {
     throw new Error('No subnets returned');
   }
   let subnets = subnetsRes.Subnets;
-  if (client) {
+  if (client && !project.taskVpcSubnetsFilters?.length) {
     const filteredSubnets = subnets.filter((subnet) => {
       return (
         subnet.Tags &&
@@ -56,7 +61,7 @@ async function getAllValidSubnets(client: string) {
 export async function getSubnetsForNetworkConfiguration(
   project: ServiceDefinition['projects'][number],
 ): Promise<NetworkConfiguration> {
-  const groupedSubnets = await getAllValidSubnets(project.client);
+  const groupedSubnets = await getAllValidSubnets(project);
   if (!groupedSubnets || groupedSubnets.size === 0) {
     throw new Error('No subnets returned');
   }

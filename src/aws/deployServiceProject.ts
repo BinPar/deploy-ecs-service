@@ -140,7 +140,7 @@ export async function deployServiceProject(
     return res;
   } catch (error) {
     setFailed(
-      `Failed to register task definition in ECS: ${(error as Error).message}`,
+      `Failed to deploy to ECS: ${(error as Error).message}`,
     );
     debug('Task definition contents:');
     debug(JSON.stringify(taskDefinition, undefined, 4));
