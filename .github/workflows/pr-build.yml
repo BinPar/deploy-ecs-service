@@ -1,0 +1,31 @@
+name: 'Build on release-please PR labeled autorelease: pending'
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build:
+    name: 'Build if PR is labeled autorelease: pending'
+    runs-on: ubuntu-latest
+    if: "${{ contains(github.event.pull_request.labels.*.name, 'autorelease: pending') }}"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - name: Linting, building and update README
+        run: npm run all
+      - name: Commit and push changes
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/BinPar/deploy-ecs-service.git"
+          git add .
+          git commit -m "chore: build and update README"
+          git push
