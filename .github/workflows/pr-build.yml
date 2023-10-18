@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     if: "${{ contains(github.event.pull_request.labels.*.name, 'autorelease: pending') }}"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -27,6 +29,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/BinPar/deploy-ecs-service.git"
           git add .
-          git checkout -b ${{ github.head_ref }}
           git commit -m "chore: build and update README"
-          git push origin ${{ github.head_ref }}
+          git push
