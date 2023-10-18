@@ -28,4 +28,4 @@ jobs:
           git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/BinPar/deploy-ecs-service.git"
           git add .
           git commit -m "chore: build and update README"
-          git push
+          git push origin HEAD:${{ github.head_ref }}
