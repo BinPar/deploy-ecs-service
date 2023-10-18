@@ -24,12 +24,19 @@ export function getELBV2Client() {
 
 async function getTargetGroupByName(targetGroupName: string) {
   const elbv2Client = getELBV2Client();
-  const res = await elbv2Client.send(
-    new DescribeTargetGroupsCommand({
-      Names: [targetGroupName],
-    }),
-  );
-  return res.TargetGroups?.[0];
+  try {
+    const res = await elbv2Client.send(
+      new DescribeTargetGroupsCommand({
+        Names: [targetGroupName],
+      }),
+    );
+    return res.TargetGroups?.[0];
+  } catch (err) {
+    if ((err as Error).name === 'TargetGroupNotFoundException') {
+      return undefined;
+    }
+    throw err;
+  }
 }
 
 async function deleteTargetGroup(targetGroupArn: string) {
