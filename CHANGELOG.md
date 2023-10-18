@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/BinPar/deploy-ecs-service/compare/v1.1.0...v1.2.0) (2023-10-18)
+
+
+### Features
+
+* secrets to task env ([e5f2f7a](https://github.com/BinPar/deploy-ecs-service/commit/e5f2f7af6723aa8bc3cd63f05a72257bf77f6f18))
+
 ## [1.1.0](https://github.com/BinPar/deploy-ecs-service/compare/v1.0.1...v1.1.0) (2023-10-17)
 
 
