@@ -133,6 +133,8 @@ export async function createOrUpdateTargetsGroups(
     if (loadBalancerTargetGroupARN) {
       loadBalancers.push({
         targetGroupArn: loadBalancerTargetGroupARN,
+        containerName: container.name,
+        containerPort: port,
       });
     }
   }
