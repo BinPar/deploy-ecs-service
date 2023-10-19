@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.7](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.6...v1.2.7) (2023-10-19)
+
+
+### Bug Fixes
+
+* get subnets from the same target group VPC ([b2f8af9](https://github.com/BinPar/deploy-ecs-service/commit/b2f8af91bc907d99a127eb1d649e70efeabf4b2c))
+
 ## [1.2.6](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.5...v1.2.6) (2023-10-19)
 
 
