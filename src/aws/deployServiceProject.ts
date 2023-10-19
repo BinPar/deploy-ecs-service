@@ -32,6 +32,7 @@ async function createService(
         project.customNetworkConfiguration ||
         (await getSubnetsForNetworkConfiguration(project)),
       enableECSManagedTags: true,
+      enableExecuteCommand: true,
       loadBalancers: project.autoCreateTargetGroups
         ? loadBalancerConfigs
         : project.loadBalancers,
@@ -71,6 +72,7 @@ async function updateService(
       networkConfiguration:
         project.customNetworkConfiguration ||
         (await getSubnetsForNetworkConfiguration(project)),
+      enableExecuteCommand: true,
       loadBalancers: project.autoCreateTargetGroups
         ? loadBalancerConfigs
         : project.loadBalancers,
