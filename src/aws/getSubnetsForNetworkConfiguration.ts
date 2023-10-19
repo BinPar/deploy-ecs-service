@@ -65,7 +65,9 @@ export async function getSubnetsForNetworkConfiguration(
   if (!groupedSubnets || groupedSubnets.size === 0) {
     throw new Error('No subnets returned');
   }
-  const subnets = Array.from(groupedSubnets.values())[0];
+  const subnets =
+    groupedSubnets.get(project.targetGroupsVPCId) ||
+    Array.from(groupedSubnets.values())[0];
   if (!subnets || subnets.length === 0) {
     throw new Error('No subnets returned');
   }
