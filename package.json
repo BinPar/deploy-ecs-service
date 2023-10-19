@@ -1,7 +1,7 @@
 {
   "name": "deploy-ecs-service",
   "description": "Deploy an ECS service",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "author": "Marcos González <marcos@binpar.com>",
   "homepage": "https://github.com/actions/deploy-ecs-service",
   "repository": {

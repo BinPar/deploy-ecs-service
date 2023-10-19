@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.5](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.4...v1.2.5) (2023-10-19)
+
+
+### Bug Fixes
+
+* target group is in use ([2c7cad3](https://github.com/BinPar/deploy-ecs-service/commit/2c7cad3fc5244f5c6f595971a190ab79894aea92))
+
 ## [1.2.4](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.3...v1.2.4) (2023-10-18)
 
 
