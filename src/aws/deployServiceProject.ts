@@ -89,9 +89,9 @@ export async function deployServiceProject(
   waitForServiceStabilityTimeout: number,
   forceNewDeploy: boolean,
 ) {
+  const projectTaskDefinition = { ...taskDefinition };
   try {
     const ecsClient = getECSClient();
-    const projectTaskDefinition = { ...taskDefinition };
     projectTaskDefinition.family = `${project.client}-${project.name}-${project.environment}`;
     if (project.secrets?.length) {
       projectTaskDefinition.containerDefinitions?.forEach((container) => {
@@ -102,7 +102,7 @@ export async function deployServiceProject(
       });
     }
     const registerResponse = await ecsClient.send(
-      new RegisterTaskDefinitionCommand(taskDefinition),
+      new RegisterTaskDefinitionCommand(projectTaskDefinition),
     );
     const taskDefResponse = registerResponse?.taskDefinition;
     if (!taskDefResponse) {
@@ -142,7 +142,7 @@ export async function deployServiceProject(
     return res;
   } catch (error) {
     debug('Task definition contents:');
-    debug(JSON.stringify(taskDefinition, undefined, 4));
+    debug(JSON.stringify(projectTaskDefinition, undefined, 4));
     throw error;
   }
 }
