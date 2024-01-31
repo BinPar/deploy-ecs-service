@@ -1,7 +1,7 @@
 {
   "name": "deploy-ecs-service",
   "description": "Deploy an ECS service",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "author": "Marcos González <marcos@binpar.com>",
   "homepage": "https://github.com/actions/deploy-ecs-service",
   "repository": {
@@ -34,7 +34,7 @@
     "type-check": "tsc -p ./tsconfig.json --noEmit",
     "package": "ncc build src/index.ts --license licenses.txt",
     "package:watch": "npm run package -- --watch",
-    "ghadocs": "npx --yes github-action-readme-generator --readme README.md",
+    "ghadocs": "github-action-readme-generator --readme README.md",
     "all": "npm run format:write && npm run lint && npm run type-check && npm run package && npm run ghadocs && node fixReadme.mjs"
   },
   "license": "MIT",
@@ -86,6 +86,7 @@
     "eslint-plugin-jest": "^27.4.3",
     "eslint-plugin-jsonc": "^2.10.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "github-action-readme-generator": "1.6.0",
     "jest": "^29.7.0",
     "js-yaml": "^4.1.0",
     "make-coverage-badge": "^1.2.0",
