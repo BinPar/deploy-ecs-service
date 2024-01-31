@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.9](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.8...v1.2.9) (2024-01-31)
+
+
+### Bug Fixes
+
+* ARM don't allow FARGATE_SPOT ([a459c63](https://github.com/BinPar/deploy-ecs-service/commit/a459c637416c8203401b724ccd6de116ef6aa7ea))
+
 ## [1.2.8](https://github.com/BinPar/deploy-ecs-service/compare/v1.2.7...v1.2.8) (2023-10-23)
 
 
