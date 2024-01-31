@@ -2,12 +2,8 @@ import { z } from 'zod';
 
 export const defaultCapacityProviderStrategy = [
   {
-    capacityProvider: 'FARGATE_SPOT',
-    weight: 1,
-  },
-  {
     capacityProvider: 'FARGATE',
-    weight: 0,
+    weight: 1,
     base: 1,
   },
 ];

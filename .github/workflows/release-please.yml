@@ -17,8 +17,8 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: package.json
-          default-branch: main
+          target-branch: main
+          token: ${{ secrets.ADMIN_GITHUB_TOKEN }}
       - uses: actions/checkout@v4
       - name: tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
