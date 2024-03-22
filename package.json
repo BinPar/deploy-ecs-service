@@ -69,7 +69,7 @@
   },
   "dependencies": {
     "@actions/core": "^1.10.1",
-    "@aws-sdk/client-ec2": "^3.433.0",
+    "@aws-sdk/client-ec2": "^3.540.0",
     "@aws-sdk/client-ecs": "^3.454.0",
     "@aws-sdk/client-elastic-load-balancing-v2": "^3.433.0",
     "yaml": "^2.3.4",
